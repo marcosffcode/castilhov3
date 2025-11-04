@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Castilho Treinamentos - Formação Profissional em Paragominas-PA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #C41E3A;
+            --secondary: #1A1A1A;
+            --accent: #D4AF37;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -50px;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-step:not(:last-child):after {
+                display: none;
+            }
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .testimonial-carousel {
+            scroll-snap-type: x mandatory;
+        }
+        
+        .testimonial-slide {
+            scroll-snap-align: start;
+        }
+        
+        .nav-scrolled {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        /* ===== EFEITOS DE SCROLL ===== */
+        
+        .scroll-fade {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+        }
+        
+        .scroll-slide-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        
+        .scroll-slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-slide-left {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        
+        .scroll-slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scroll-slide-right {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        
+        .scroll-slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scroll-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .scroll-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .scroll-rotate {
+            opacity: 0;
+            transform: rotate(-5deg) scale(0.95);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        
+        .scroll-rotate.visible {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        .scroll-blur {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-blur.visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+        
+        .scroll-stagger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .scroll-stagger.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-stagger:nth-child(1) { transition-delay: 0.1s; }
+        .scroll-stagger:nth-child(2) { transition-delay: 0.2s; }
+        .scroll-stagger:nth-child(3) { transition-delay: 0.3s; }
+        .scroll-stagger:nth-child(4) { transition-delay: 0.4s; }
+        .scroll-stagger:nth-child(5) { transition-delay: 0.5s; }
+        .scroll-stagger:nth-child(6) { transition-delay: 0.6s; }
+        
+        .scroll-flip {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-15deg);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-flip.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+        
+        .scroll-bounce {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .scroll-bounce.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50% - 1rem));
+            }
+        }
+        
+        .animate-scroll {
+            animation: scroll 30s linear infinite;
+        }
+        
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @media (max-width: 768px) {
+            .animate-scroll {
+                animation: scroll 20s linear infinite;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    
+    <!-- Hero Section -->
+    <section id="hero-section" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-10 lg:pt-14">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gray-900"></div>
+            <img 
+                src="law-public-administration-public-safety.jpg" 
+                alt="Bombeiros em treinamento" 
+                class="w-full h-full object-cover absolute inset-0 object-center"
+            >
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/85 to-gray-900/95 z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/90 z-10"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-white py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="flex flex-col items-center justify-center mb-6">
+                    <img src="logo.png" alt="Castilho Treinamentos" class="h-20 md:h-36 lg:h-32 w-auto object-contain max-w-[300px] md:max-w-[370px] mx-auto">
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-6 leading-tight px-4">
+                    Transforme Sua Carreira com 
+                    <span class="font-bold block mt-2 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                        Certificações Reconhecidas
+                    </span>
+                </h1>
+                
+                <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-10 text-gray-200 leading-relaxed max-w-3xl mx-auto px-4">
+                    Capacitação completa em <span class="font-semibold text-white">Bombeiro Civil</span>, 
+                    <span class="font-semibold text-white">Primeiros Socorros</span> e 
+                    <span class="font-semibold text-white">Segurança Patrimonial</span>. 
+                    Torne-se um profissional requisitado pelo mercado.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-12 justify-center items-center px-4">
+                    <a href="#courses" class="group w-full sm:w-auto bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:from-[#F4D03F] hover:to-[#D4AF37] text-gray-900 px-8 py-4 rounded-xl font-semibold flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl shadow-lg">
+                        <i data-lucide="book-open" class="mr-3 w-5 h-5"></i>
+                        Garantir Minha Vaga
+                        <i data-lucide="arrow-right" class="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto px-4">
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-5 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:-translate-y-1">
+                        <div class="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#D4AF37]/20 rounded-lg mb-4 mx-auto">
+                            <i data-lucide="badge-check" class="text-[#D4AF37] w-6 h-6 md:w-7 md:h-7"></i>
+                        </div>
+                        <h3 class="font-semibold text-white text-center text-base md:text-lg mb-2">Certificado Reconhecido</h3>
+                        <p class="text-gray-300 text-sm md:text-base text-center leading-relaxed">Válido em todo território nacional</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-5 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:-translate-y-1">
+                        <div class="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#D4AF37]/20 rounded-lg mb-4 mx-auto">
+                            <i data-lucide="activity" class="text-[#D4AF37] w-6 h-6 md:w-7 md:h-7"></i>
+                        </div>
+                        <h3 class="font-semibold text-white text-center text-base md:text-lg mb-2">70% Práticas</h3>
+                        <p class="text-gray-300 text-sm md:text-base text-center leading-relaxed">Aprendizado baseado em situações reais</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-5 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:-translate-y-1">
+                        <div class="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#D4AF37]/20 rounded-lg mb-4 mx-auto">
+                            <i data-lucide="users" class="text-[#D4AF37] w-6 h-6 md:w-7 md:h-7"></i>
+                        </div>
+                        <h3 class="font-semibold text-white text-center text-base md:text-lg mb-2">Instrutores Experientes</h3>
+                        <p class="text-gray-300 text-sm md:text-base text-center leading-relaxed">Profissionais com anos de atuação</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hidden md:block">
+            <a href="#courses" class="text-white/70 hover:text-white transition-colors duration-300">
+                <i data-lucide="chevron-down" class="w-8 h-8"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Galeria Section -->
+    <section id="depoimentos" class="py-16 bg-gray-100 overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 scroll-fade">
+                <span class="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">GALERIA</span>
+                <h2 class="text-3xl font-light mb-4">
+                    Nossos <span class="font-bold">Treinamentos em Ação</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Conheça nossa estrutura e metodologia prática
+                </p>
+            </div>
+            
+            <div class="relative scroll-scale">
+                <div class="carousel-container overflow-hidden">
+                    <div class="carousel-track flex animate-scroll">
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/1.webp" alt="Treinamento prático" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/2.webp" alt="Equipamentos profissionais" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/3.webp" alt="Simulação realista" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/4.webp" alt="Instrutores especializados" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/5.webp" alt="Ambiente de aprendizagem" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/7.webp" alt="Treinamento prático" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/8.webp" alt="Equipamentos profissionais" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/1.webp" alt="Simulação realista" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/2.webp" alt="Instrutores especializados" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                        <div class="carousel-slide flex-shrink-0 w-48 h-48 md:w-64 md:h-64 mx-2">
+                            <img src="img-treinamento/3.webp" alt="Ambiente de aprendizagem" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-gray-100 to-transparent z-10"></div>
+                <div class="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-gray-100 to-transparent z-10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-20 bg-gray-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-10 left-10 w-32 h-32 border-2 border-[#D4AF37] rounded-full"></div>
+            <div class="absolute top-1/4 right-20 w-24 h-24 border-2 border-[#D4AF37] rounded-full"></div>
+            <div class="absolute bottom-20 left-1/4 w-20 h-20 border-2 border-[#D4AF37] rounded-full"></div>
+            <div class="absolute bottom-10 right-10 w-28 h-28 border-2 border-[#D4AF37] rounded-full"></div>
+        </div>
+        
+        <div class="absolute inset-0 opacity-[0.02] bg-[length:50px_50px] bg-[linear-gradient(to_right,#D4AF37_1px,transparent_1px),linear-gradient(to_bottom,#D4AF37_1px,transparent_1px)]"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 scroll-fade">
+                <h2 class="text-4xl md:text-5xl font-light mb-6">
+                    A Capacitação Que <span class="font-bold bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] bg-clip-text text-transparent">Abre Portas</span> no Mercado
+                </h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                    Formação completa com metodologia prática e certificação reconhecida nacionalmente
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="user-check" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">Instrutores Experientes</h3>
+                        <p class="text-gray-300 leading-relaxed">Profissionais atuantes no mercado com anos de experiência prática comprovada.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="award" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">Certificação Nacional</h3>
+                        <p class="text-gray-300 leading-relaxed">Documentos válidos em todo território nacional e amplamente reconhecidos.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="activity" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">70% Prático</h3>
+                        <p class="text-gray-300 leading-relaxed">Metodologia focada em prática real para formação efetiva e duradoura.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="home" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">Infraestrutura Completa</h3>
+                        <p class="text-gray-300 leading-relaxed">Ambiente totalmente equipado com materiais profissionais para treinamento.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="life-buoy" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">Suporte Pós-Formação</h3>
+                        <p class="text-gray-300 leading-relaxed">Acompanhamento contínuo após o curso para dúvidas e orientações.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger group flex items-start p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#D4AF37]/30 hover:bg-gray-800/70 transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full p-3 mr-4 flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="users" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-white group-hover:text-[#D4AF37] transition-colors">Turmas Reduzidas</h3>
+                        <p class="text-gray-300 leading-relaxed">Atenção personalizada com número limitado de alunos por turma.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#courses" class="group inline-flex items-center bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:from-[#F4D03F] hover:to-[#D4AF37] text-gray-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg">
+                    <i data-lucide="book-open" class="mr-3 w-5 h-5"></i>
+                    Conhecer Nossos Cursos
+                    <i data-lucide="arrow-right" class="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 scroll-blur">
+                <span class="bg-gradient-to-r from-red-600 to-red-700 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6 inline-block shadow-lg">
+                    CURSO EM DESTAQUE
+                </span>
+                <h2 class="text-4xl md:text-5xl font-light mb-6 text-gray-900">
+                    <span class="font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">Brigada de Incêndio</span> - Formação Completa
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Torne-se um profissional essencial na prevenção e combate a incêndios
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto mb-16 scroll-scale">
+                <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                    <div class="md:flex">
+                        <div class="md:w-2/3 p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2 inline-block">MAIS PROCURADO</span>
+                                    <h3 class="text-3xl font-bold text-gray-900 mb-2">Brigada de Incêndio</h3>
+                                    <p class="text-red-600 font-semibold">Formação completa com certificado reconhecido nacionalmente</p>
+                                </div>
+                                <div class="flex items-center text-gray-500 bg-gray-100 rounded-xl px-4 py-2">
+                                    <i data-lucide="clock" class="mr-2 w-4 h-4"></i>
+                                    <span class="font-medium">40h</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                                Curso essencial para empresas e profissionais que buscam atuar na prevenção, abandono e combate a incêndios. Formação prática e teórica conforme normas do Corpo de Bombeiros.
+                            </p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 rounded-full p-1 mr-3">
+                                        <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Atendimento à legislação</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 rounded-full p-1 mr-3">
+                                        <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Prática com equipamentos reais</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 rounded-full p-1 mr-3">
+                                        <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Certificado válido em todo Brasil</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 rounded-full p-1 mr-3">
+                                        <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Instrutores bombeiros militares</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-red-50 rounded-xl p-4 mb-6">
+                                <h4 class="font-bold text-red-800 mb-2 flex items-center">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4 mr-2"></i>
+                                    Obrigatório para:
+                                </h4>
+                                <p class="text-red-700 text-sm">
+                                    Empresas comerciais, industriais, hospitais, escolas, shoppings, condomínios e todos os estabelecimentos com potencial risco de incêndio.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-1/3 bg-gradient-to-b from-red-600 to-red-700 p-8 flex flex-col justify-center items-center text-center text-white">
+                            <div class="mb-4">
+                                <h4 class="text-xl font-bold mb-2">Turmas Abertas</h4>
+                                <p class="text-red-100 mb-4">Início imediato</p>
+                            </div>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center justify-center">
+                                    <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                                    <span>Turmas reduzidas</span>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i data-lucide="award" class="w-4 h-4 mr-2"></i>
+                                    <span>Certificado reconhecido</span>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                                    <span>Flexibilidade de horários</span>
+                                </div>
+                            </div>
+                            
+                            <a href="#contato" class="w-full bg-white text-red-600 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-center">
+                                Matricule-se Agora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mb-12 scroll-fade">
+                <h3 class="text-3xl md:text-4xl font-light mb-4 text-gray-900">
+                    Outros <span class="font-bold text-gray-900">Cursos</span> Disponíveis
+                </h3>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Conheça nossa grade completa de formação profissional
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="scroll-flip group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:-translate-y-2">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 to-red-700"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                               <h3 class="text-2xl font-bold text-gray-900 mb-2">Formação de Bombeiro Civil</h3>
+                            </div>
+                            <div class="flex items-center text-gray-500 bg-gray-100 rounded-xl px-3 py-2">
+                                <i data-lucide="clock" class="mr-2 w-4 h-4"></i>
+                                <span class="font-medium">120h</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                            Torne-se essencial para segurança de empresas. Formação completa em prevenção, combate a incêndios e resgate profissional.
+                        </p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Certificado reconhecido nacionalmente</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Equipamentos profissionais reais</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Técnicas avançadas de resgate</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Combate a incêndio prático</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-flip group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:-translate-y-2">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Primeiros Socorros</h3>
+                            </div>
+                            <div class="flex items-center text-gray-500 bg-gray-100 rounded-xl px-3 py-2">
+                                <i data-lucide="clock" class="mr-2 w-4 h-4"></i>
+                                <span class="font-medium">40h</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                            Aprenda a salvar vidas em situações de emergência. Certificação obrigatória para diversas profissões e setores.
+                        </p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Técnicas de RCP e desobstrução</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Atendimento a emergências médicas</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Certificado válido nacionalmente</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Simulações práticas realistas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-flip group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:-translate-y-2">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 to-red-700"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Segurança Patrimonial</h3>
+                            </div>
+                            <div class="flex items-center text-gray-500 bg-gray-100 rounded-xl px-3 py-2">
+                                <i data-lucide="clock" class="mr-2 w-4 h-4"></i>
+                                <span class="font-medium">80h</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                            Ingresse no setor de segurança privada em crescimento. Preparação técnica, legal e ética completa para atuação profissional.
+                        </p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Legislação aplicada à segurança</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Técnicas de vigilância e prevenção</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Mercado em alta expansão</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Ética e conduta profissional</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-flip group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:-translate-y-2">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Certificações NR</h3>
+                            </div>
+                            <div class="flex items-center text-gray-500 bg-gray-100 rounded-xl px-3 py-2">
+                                <i data-lucide="clock" class="mr-2 w-4 h-4"></i>
+                                <span class="font-medium">40h</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                            NR-35, 33, 20, 18 e outras. Certificações obrigatórias para trabalho em altura, espaços confinados, inflamáveis e construção civil.
+                        </p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Atendimento à exigência legal</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Indústria e construção civil</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Processo de renovação facilitado</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-green-100 rounded-full p-1 mr-3">
+                                    <i data-lucide="check" class="text-green-600 w-4 h-4"></i>
+                                </div>
+                                <span class="text-gray-700 font-medium">Múltiplas NRs disponíveis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#contato" class="inline-flex items-center bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg">
+                    <i data-lucide="message-circle" class="mr-3 w-5 h-5"></i>
+                    Falar com Nossos Especialistas
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais Section -->
+    <section id="diferenciais" class="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 scroll-slide-up">
+                <span class="bg-[#D4AF37] text-gray-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">POR QUE CASTILHO</span>
+                <h2 class="text-3xl font-light mb-4">
+                    Diferenciais Que <span class="font-bold">Garantem</span> Sua Formação
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="award" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Experiência Comprovada</h3>
+                        <p class="text-gray-300 text-sm">Mais de 1.877 alunos formados e atuantes no mercado.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="home" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Estrutura Profissional</h3>
+                        <p class="text-gray-300 text-sm">Ambiente equipado com materiais profissionais para treinamento.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="file-check" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Certificação Reconhecida</h3>
+                        <p class="text-gray-300 text-sm">Documentos válidos em todo território nacional e reconhecidos.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="users" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Turmas Personalizadas</h3>
+                        <p class="text-gray-300 text-sm">Atenção individualizada com número limitado de alunos.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Localização Estratégica</h3>
+                        <p class="text-gray-300 text-sm">Centro de Paragominas-PA, fácil acesso e estacionamento.</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-stagger flex items-start">
+                    <div class="bg-[#D4AF37] rounded-full p-3 mr-4 flex-shrink-0">
+                        <i data-lucide="clock" class="w-6 h-6 text-gray-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Horários Flexíveis</h3>
+                        <p class="text-gray-300 text-sm">Turmas diurnas e noturnas para atender sua disponibilidade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 scroll-fade">
+                <span class="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">METODOLOGIA</span>
+                <h2 class="text-3xl font-light mb-4">
+                    Como Funciona Sua <span class="font-bold">Formação</span>
+                </h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-8 md:space-y-0">
+                <div class="scroll-bounce timeline-step relative text-center max-w-xs">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                    <i data-lucide="edit" class="w-8 h-8 text-red-600 mx-auto mb-2"></i>
+                    <h3 class="font-semibold mb-2">Matrícula</h3>
+                    <p class="text-gray-600 text-sm">Documentação e inscrição no curso escolhido.</p>
+                </div>
+                
+                <div class="scroll-bounce timeline-step relative text-center max-w-xs">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                    <i data-lucide="book-open" class="w-8 h-8 text-red-600 mx-auto mb-2"></i>
+                    <h3 class="font-semibold mb-2">Aulas Teóricas</h3>
+                    <p class="text-gray-600 text-sm">Fundamentos teóricos e legislação aplicada.</p>
+                </div>
+                
+                <div class="scroll-bounce timeline-step relative text-center max-w-xs">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                    <i data-lucide="activity" class="w-8 h-8 text-red-600 mx-auto mb-2"></i>
+                    <h3 class="font-semibold mb-2">Treinamento Prático</h3>
+                    <p class="text-gray-600 text-sm">Exercícios reais com equipamentos profissionais.</p>
+                </div>
+                
+                <div class="scroll-bounce timeline-step relative text-center max-w-xs">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">4</div>
+                    <i data-lucide="clipboard-check" class="w-8 h-8 text-red-600 mx-auto mb-2"></i>
+                    <h3 class="font-semibold mb-2">Avaliação</h3>
+                    <p class="text-gray-600 text-sm">Testes teóricos e práticos para certificação.</p>
+                </div>
+                
+                <div class="scroll-bounce timeline-step relative text-center max-w-xs">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">5</div>
+                    <i data-lucide="award" class="w-8 h-8 text-red-600 mx-auto mb-2"></i>
+                    <h3 class="font-semibold mb-2">Certificado</h3>
+                    <p class="text-gray-600 text-sm">Emissão do documento reconhecido nacionalmente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 scroll-slide-up">
+                <h2 class="text-3xl font-light mb-4">
+                    Dúvidas <span class="font-bold">Frequentes</span>
+                </h2>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Certificados são reconhecidos nacionalmente?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            Sim, todos os nossos certificados são emitidos de acordo com as normas nacionais e são válidos em todo território brasileiro. Trabalhamos em conformidade com as legislações específicas de cada área de formação.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Qual duração dos cursos?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            A duração varia conforme o curso. Nossas formações vão de 8 horas (para algumas NRs) até 120 horas (para Bombeiro Civil). Cada curso tem sua carga horária definida conforme as exigências legais e necessidades do mercado.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Preciso ter experiência prévia?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            Não é necessário experiência prévia para a maioria dos cursos. Nossas formações são completas, partindo dos conceitos básicos até as técnicas avançadas. O importante é ter vontade de aprender e se dedicar.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Como funciona o pagamento?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            Oferecemos diversas opções de pagamento: à vista com desconto, parcelamento no cartão de crédito (até 12x) ou boleto bancário. Também temos convênios com empresas e condições especiais para grupos.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Vocês ajudam na colocação no mercado?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            Sim, mantemos parcerias com empresas da região que frequentemente buscam nossos alunos formados. Além disso, disponibilizamos vagas em nosso grupo exclusivo e oferecemos orientação para currículo e entrevistas.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-slide-right accordion-item bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-6 text-left">
+                        <span class="font-medium">Qual o diferencial do Castilho?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0 text-gray-600">
+                            Nossa metodologia prática (70% do curso), instrutores com experiência real no mercado, estrutura completa e acompanhamento pós-curso nos destacam. Além disso, focamos não apenas na certificação, mas na formação de profissionais realmente capacitados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contato" class="relative bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="text-center mb-12 scroll-scale">
+                    <h2 class="text-3xl md:text-4xl font-light mb-6">
+                        Pronto Para <span class="font-bold bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] bg-clip-text text-transparent">Transformar Sua Carreira?</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        Fale diretamente com nossos especialistas pelo WhatsApp e dê o primeiro passo
+                    </p>
+                </div>
+
+                <div class="scroll-bounce bg-white/10 backdrop-blur-md rounded-2xl p-8 md:p-10 border border-white/20 mb-12 max-w-2xl mx-auto">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="bg-green-500 rounded-full p-4 mb-6">
+                            <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Conversar no WhatsApp</h3>
+                        <p class="text-gray-300 mb-6 max-w-md">
+                            Tire todas suas dúvidas sobre cursos, valores, turmas e processo de matrícula diretamente com nossos especialistas
+                        </p>
+                        <a href="https://api.whatsapp.com/send?phone=5591993732168&text=Ol%C3%A1%2C%20tenho%20interesse%20no%20treinamento!" 
+                           target="_blank"
+                           class="group bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl shadow-lg text-lg w-full max-w-xs">
+                            <i data-lucide="message-circle" class="mr-3 w-5 h-5"></i>
+                            FALE CONOSCO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white text-gray-700 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="logo.png" alt="Castilho Treinamentos" class="h-10 w-auto">
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Formação profissional de excelência em Paragominas-PA.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="text-gray-500 hover:text-red-600 transition-colors duration-300">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-red-600 transition-colors duration-300">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#courses" class="hover:text-red-600 transition-colors duration-300">Nossos Cursos</a></li>
+                        <li><a href="#diferenciais" class="hover:text-red-600 transition-colors duration-300">Diferenciais</a></li>
+                        <li><a href="#depoimentos" class="hover:text-red-600 transition-colors duration-300">Depoimentos</a></li>
+                        <li><a href="#contato" class="hover:text-red-600 transition-colors duration-300">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2 mt-0.5 text-red-600 flex-shrink-0"></i>
+                            <span>Av. Principal, 1234 - Centro<br>Paragominas-PA</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="phone" class="w-4 h-4 mr-2 text-red-600 flex-shrink-0"></i>
+                            <span>(91) 99373-2168</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-4 h-4 mr-2 text-red-600 flex-shrink-0"></i>
+                            <span>contato@castilhotreinamentos.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-xs text-gray-500 mb-4 md:mb-0">
+                    &copy; 2024 Castilho Treinamentos. Todos os direitos reservados.
+                </p>
+                <div class="flex space-x-4 text-xs text-gray-500">
+                    <a href="#" class="hover:text-red-600 transition-colors duration-300">Termos de Uso</a>
+                    <a href="#" class="hover:text-red-600 transition-colors duration-300">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // ===== SCROLL ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        const scrollElements = document.querySelectorAll(
+            '.scroll-fade, .scroll-slide-up, .scroll-slide-left, .scroll-slide-right, ' +
+            '.scroll-scale, .scroll-rotate, .scroll-blur, .scroll-stagger, ' +
+            '.scroll-flip, .scroll-bounce'
+        );
+
+        scrollElements.forEach(el => scrollObserver.observe(el));
+        
+        // ROLAGEM SUAVE
+        function smoothScroll(target) {
+            const element = document.querySelector(target);
+            if (element) {
+                const headerOffset = 20;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                
+                if (targetId === '#' || targetId === '#!') {
+                    e.preventDefault();
+                    return;
+                }
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    smoothScroll(targetId);
+                }
+            });
+        });
+        
+        // Accordion Functionality
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionItem = button.closest('.accordion-item');
+                const content = accordionItem.querySelector('.accordion-content');
+                const icon = button.querySelector('i');
+                
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        // Testimonial Carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+        const testimonialCount = testimonials.length;
+        
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                if (i === index) {
+                    testimonial.style.opacity = '1';
+                } else {
+                    testimonial.style.opacity = '0';
+                }
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonialCount;
+            showTestimonial(currentTestimonial);
+        }
+        
+        if (testimonialCount > 0) {
+            setInterval(nextTestimonial, 5000);
+        }
+        
+        // Form Validation
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const course = document.getElementById('course').value;
+                
+                if (!name || !phone || !course) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                alert('Formulário enviado com sucesso! Entraremos em contato em breve.');
+                form.reset();
+            });
+        }
+        
+        // Phone Mask
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 11) value = value.substring(0, 11);
+                
+                if (value.length > 0) {
+                    value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                }
+                if (value.length > 10) {
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                } else if (value.length > 9) {
+                    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                }
+                
+                e.target.value = value;
+            });
+        }
+    </script>
+</body>
+</html>
